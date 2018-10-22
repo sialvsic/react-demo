@@ -1,0 +1,27 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+export BUCKET=s3://yx-app
+export BUCKET_PATH=${BUCKET}/react-demo
+
+echo "Get build artifact"
+mkdir -p artifact
+buildkite-agent artifact download artifact/build-app.tar.gz artifact/
+# tar -zxvf artifact/build-app.tar.gz
+
+echo "Deploy app"
+
+echo "--- Deploy files with long cache"
+aws s3 cp --region us-east-1 build/static ${BUCKET_PATH}/static --recursive \
+  --exclude "*" --include "*.js" --include "*.css" --include "*.png" \
+  --cache-control max-age=31104000
+
+echo "--- Deploy favicon"
+aws s3 cp --region us-east-1 build/favicon.ico ${BUCKET_PATH}/ \
+  --cache-control max-age=86400
+
+echo "--- Deploy files with short cache"
+aws s3 cp --region us-east-1 build/ ${BUCKET_PATH}/ --recursive \
+  --exclude "*.js" --exclude "*.css" --exclude "*.png" --exclude "*.ico" \
+  --cache-control max-age=60

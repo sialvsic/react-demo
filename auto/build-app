@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+export REACT_APP_ENVIRONMENT="dev"
+
+echo "--- Building assets"
+auto/ci-environment yarn run build
+
+echo "--- Packaging assets"
+mkdir -p artifact && tar -zcvf artifact/build-app.tar.gz build

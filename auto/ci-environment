@@ -1,0 +1,18 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+# Clean up at the end
+trap "docker-compose down --volumes" 0
+
+# create volume
+docker volume create --name react-demo-npm-cache > /dev/null
+
+# Build dev image
+docker-compose build dev
+
+# Disables interactive testing
+export CI=true
+
+# Give a shell or run what's passed in as arguments
+docker-compose run --no-deps --rm dev "${@-bash}"

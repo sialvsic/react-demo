@@ -1,0 +1,21 @@
+steps:
+  - label: Building Start
+    command: echo "Go!"
+
+  - name: Unit Tests
+    command: ./auto/test
+
+  - name: Node Security Check
+    command: ./auto/security-check
+
+  - wait
+
+  - name: Build Application
+    command: ./auto/build-app
+    artifact_paths: artifact/build-app.tar.gz
+
+  - wait
+
+  - name: Deploy Application
+    command: ./auto/deploy-app
+    branches: 'master'

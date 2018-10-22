@@ -1,0 +1,9 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+# Disables interactive testing
+export CI=true
+
+echo "--- Running Security Check"
+auto/dev-environment nsp check

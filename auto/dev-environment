@@ -1,0 +1,66 @@
+#!/bin/bash -eu
+
+cd $(dirname $0)/..
+
+# Clean up at the end
+trap "docker-compose down --volumes" 0
+
+# create volume
+docker volume create --name react-demo-npm-cache > /dev/null
+
+# Build dev image
+docker-compose build
+
+# install node_module
+docker-compose run --rm dev sh -c 'yarn install'
+
+# Give a shell or run what's passed in as arguments
+docker-compose run --rm --service-ports dev "${@-bash}"
+
+###################################################################################
+# 命令详解
+
+# #!/bin/bash -eu
+# #!/bin/bash是指此脚本使用/bin/bash来解释执行，#!是特殊的表示符，其后面是此解释此脚本的shell的路径
+# -eu
+# e	Exit script immediately if any command returns a non-zero exit status.
+# u	Exit script immediately if an undefined variable is used (e.g. echo "$UNDEFINED_ENV_VAR").
+# 和set -eu类似
+
+# cd $(dirname $0)/..
+
+# $0 获取当前脚本的文件名（间接运行时还包括绝对路径）
+# dirname
+# $(dirname $0)
+# cd $(dirname $0) 进入脚本文件放置的目录
+
+# trap "docker-compose down --volumes" 0
+# 在退出，终止docker容器时清理所有的相关的容器，卷
+# docker-compose down 删除所有的相关的容器
+# --volumes Remove named volumes declared in the `volumes` section of the Compose file and anonymous volumes attached to containers.
+#
+# trap
+# 格式：trap "commands" signals
+# 当shell接收到signals指定的信号时，执行commands命令（The command arg is to be read and executed when the shell receives signal(s) sigspec. ）
+
+
+# docker ps -a 可以查看所有的容器。包含退出或者停止运行的
+
+
+# docker-compose build
+# 根据docker-compose.yml文件来构建项目中的服务容器
+
+# docker-compose run --rm --service-ports dev "${@-bash}"
+# run dev command 在指定服务上执行一个命令
+#
+# --rm  运行命令后自动删除容器 如果不添加，则每次运行都会新生成一个container
+# --service-ports 配置服务端口并映射到本地主机 如果不添加，则并不会映射到本地端口， 可以使用类似-p 3000:3000代替
+# --no-deps 不自动的启动关联的服务容器，比如compose的depends_on设定的依赖项
+
+# 使用"${@-bash}" 得到从外面传递进来的参数
+# auto/start yarn start @-bash 为yarn start
+# auto/start @-bash 为bash
+
+# 使用$@只能拿到额外的传递的参数
+# auto/start yarn start $@ 为yarn start
+# auto/start $@ 为空
