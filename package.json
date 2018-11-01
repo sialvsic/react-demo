@@ -42,8 +42,8 @@
     "webpack-hot-middleware": "^2.23.1"
   },
   "dependencies": {
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   },
   "scripts": {
     "start": "node ./examples/server.js",
