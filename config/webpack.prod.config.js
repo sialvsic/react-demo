@@ -21,7 +21,7 @@ module.exports = {
       canPrint: false
     }),
     new HtmlWebpackPlugin({
-      title: 'Development',
+      title: 'React',
       template: './template/index.html',
     }),
   ],
