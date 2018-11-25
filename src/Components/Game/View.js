@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Game.css';
+import './style.css';
 
 function Square(props) {
   return (
@@ -65,7 +65,7 @@ class Board extends React.Component {
   }
 }
 
-class Game extends React.Component {
+class View extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -144,4 +144,4 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+export default View;

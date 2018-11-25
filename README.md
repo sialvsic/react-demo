@@ -8,6 +8,8 @@ Learning it from https://reactjs.org
 Link here: http://yx-app.s3-website-us-east-1.amazonaws.com/react-demo/
 
 # History
-ReactV16.6.0 
-- Tutorial: Intro to React
 
+ReactV16.6.0 
+
+- Tutorial: Intro to React 2018.11.02
+- React Docs: 
