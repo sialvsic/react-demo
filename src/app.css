@@ -1,5 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Cutive+Mono);
+
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  font-family: 'Cutive Mono', monospace;
+  margin: 0 auto;
+  max-width: 1248px;
+  -webkit-font-smoothing: antialiased;
 }
 

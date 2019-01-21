@@ -2,7 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Game from './Components/Game/';
 import Home from './Components/Home/';
-import InlineInput from './Components/InlineInput/';
+import Inline from './Components/inline-edit/';
+import Key from './Components/Key/';
+import Context from './Components/Context/';
 
 import './app.css';
 
@@ -11,9 +13,11 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={ Home }/>
+          <Route exact={ true } path="/" component={ Home }/>
           <Route path="/game" component={ Game }/>
-          <Route path="/inlineInput" component={ InlineInput }/>
+          <Route path="/inline" component={ Inline }/>
+          <Route path="/key" component={ Key }/>
+          <Route path="/Context" component={ Context }/>
         </div>
       </Router>
     );
