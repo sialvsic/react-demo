@@ -10,7 +10,8 @@ module.exports = {
   },
   output: {
     filename: '[chunkhash:6].bundle.js',
-    path: path.resolve(__dirname, '../build')
+    path: path.resolve(__dirname, '../build'),
+    publicPath: './'
   },
   plugins: [
     new CleanWebpackPlugin('build', path.resolve(__dirname, '../')),
