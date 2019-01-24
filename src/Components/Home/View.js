@@ -1,24 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { config } from '../../App';
 
 const View = () => {
-  return (<div>
-    <p>
-      Home Page - Visit: <Link to="/">Home Page</Link>
-    </p>
-    <p>
-      React Game - Visit: <Link to="/game">React Game</Link>
-    </p>
-    <p>
-      Inline Edit Component - Visit: <Link to="/inline">Inline Edit Component</Link>
-    </p>
-    <p>
-      key - Visit: <Link to="/key">Key</Link>
-    </p>
-    <p>
-      Context - Visit: <Link to="/Context">Context</Link>
-    </p>
-  </div>);
+
+  return (
+    <div>
+      { config.map((item) => {
+        return (
+          <p>
+            { item.label } - Visit: <Link to={ item.path }> { item.text }</Link>
+          </p>);
+      }) }
+    </div>
+  );
 };
 
 export default View;

@@ -5,19 +5,80 @@ import Home from './Components/Home/';
 import Inline from './Components/inline-edit/';
 import Key from './Components/Key/';
 import Context from './Components/Context/';
+import ListDelete from './Components/ListDelete/';
+import This from './Components/This/';
 
 import './app.css';
 
+export const config = [
+  {
+    path: '/',
+    component: Home,
+    name: 'home',
+    label: 'Home Page',
+    text: 'Home Page',
+    exact: true
+  }, {
+    path: '/game',
+    component: Game,
+    name: 'game',
+    label: 'React Game',
+    text: 'React Game',
+    exact: false
+  }, {
+    path: '/inline',
+    component: Inline,
+    name: 'inline',
+    label: 'Inline Edit',
+    text: 'Inline Edit',
+    exact: false
+  }, {
+    path: '/key',
+    component: Key,
+    name: 'key',
+    label: 'Key',
+    text: 'Key',
+    exact: false
+  },
+  {
+    path: '/context',
+    component: Context,
+    name: 'context',
+    label: 'Context',
+    text: 'Context',
+    exact: false
+  }, {
+    path: '/list-delete',
+    component: ListDelete,
+    name: 'list',
+    label: 'List Delete 优化',
+    text: 'List Delete',
+    exact: false
+  }, {
+    path: '/this',
+    component: This,
+    name: 'this',
+    label: 'this 使用举例',
+    text: 'this',
+    exact: false
+  }];
+
 class App extends React.Component {
+
   render() {
     return (
       <Router>
         <div>
-          <Route exact={ true } path="/" component={ Home }/>
-          <Route path="/game" component={ Game }/>
-          <Route path="/inline" component={ Inline }/>
-          <Route path="/key" component={ Key }/>
-          <Route path="/Context" component={ Context }/>
+          {
+            config.map((route) => {
+              return <Route
+                key={ route.name }
+                exact={ route.exact }
+                path={ route.path }
+                component={ route.component }
+              />;
+            })
+          }
         </div>
       </Router>
     );

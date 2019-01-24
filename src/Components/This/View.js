@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-class ArrayKey extends Component {
+class This extends Component {
   constructor(props) {
     super(props);
-    this.name = 'ArrayKey';
+    this.name = 'This';
     this.handleClick4 = this.handleClick4.bind(this);
   }
 
-  a() {
+  a() { //添加为一个实例方法
     console.log(this.name);
   }
 
-  b = () => {
+  b = () => { //添加到原型链上的方法
     console.log(this.name);
   };
 
@@ -48,5 +48,4 @@ class ArrayKey extends Component {
   }
 }
 
-
-export default ArrayKey;
+export default This;
