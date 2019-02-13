@@ -1,4 +1,5 @@
 import startsWith from 'lodash/startsWith';
+import includes from 'lodash/includes';
 import clamp from 'lodash/clamp';
 
 const IS_CLIENT = typeof window != 'undefined';
@@ -66,6 +67,17 @@ export const addSymbol = (
 ) => {
   string = string + sign;
   return string;
+};
+
+export const removeSymbol = (string, sign = '%') => {
+  const regKeyWords = ['$', '^'];
+  let reg = sign;
+
+  if (includes(regKeyWords, sign)) {
+    reg = `\\${sign}`;
+  }
+
+  return string.replace(new RegExp(reg, 'g'), '');
 };
 
 export const isValidDecimalNumber = (value, decimalLength) => {
