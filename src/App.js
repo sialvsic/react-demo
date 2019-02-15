@@ -7,6 +7,7 @@ import Key from './Components/Key/';
 import Context from './Components/Context/';
 import ListDelete from './Components/ListDelete/';
 import This from './Components/This/';
+import Ref from './Components/Ref/';
 
 import './app.css';
 
@@ -60,6 +61,14 @@ export const config = [
     name: 'this',
     label: 'this 使用举例',
     text: 'this',
+    exact: false
+  },
+  {
+    path: '/ref',
+    component: Ref,
+    name: 'ref',
+    label: 'ref 使用举例',
+    text: 'ref',
     exact: false
   }];
 
