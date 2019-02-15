@@ -8,6 +8,7 @@ import Context from './Components/Context/';
 import ListDelete from './Components/ListDelete/';
 import This from './Components/This/';
 import Ref from './Components/Ref/';
+import RenderProps from './Components/RenderProps/';
 
 import './app.css';
 
@@ -69,6 +70,14 @@ export const config = [
     name: 'ref',
     label: 'ref 使用举例',
     text: 'ref',
+    exact: false
+  },
+  {
+    path: '/render-props',
+    component: RenderProps,
+    name: 'render props',
+    label: 'render props使用举例',
+    text: 'render props',
     exact: false
   }];
 
