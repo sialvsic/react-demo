@@ -1,4 +1,16 @@
 import React from 'react';
+import avatar from '../../resources/avatar.jpg';
+
+class Cat extends React.Component {
+  render() {
+    const mouse = this.props.mouse;
+    return (
+      <img onMouseMove={ (e) => {
+        e.stopPropagation();
+      } } src={ avatar } style={ { height: '100px', width: '100px', position: 'absolute', left: mouse.x, top: mouse.y } }/>
+    );
+  }
+}
 
 class Mouse extends React.Component {
   constructor(props) {
@@ -12,14 +24,18 @@ class Mouse extends React.Component {
       x: event.clientX,
       y: event.clientY
     });
+    event.stopPropagation();
   }
 
   render() {
     return (
-      <div style={{ height: '100%' }} onMouseMove={this.handleMouseMove}>
+      <div style={ { height: '500px', width: '1000px', position: 'relative' } } onMouseMove={ this.handleMouseMove }>
 
-        {/* ...but how do we render something other than a <p>? */}
-        <p>The current mouse position is ({this.state.x}, {this.state.y})</p>
+        {/*
+          Instead of providing a static representation of what <Mouse> renders,
+          use the `render` prop to dynamically determine what to render.
+        */ }
+        { this.props.render(this.state) }
       </div>
     );
   }
@@ -30,10 +46,25 @@ class MouseTracker extends React.Component {
     return (
       <div>
         <h1>Move the mouse around!</h1>
-        <Mouse />
+        <Mouse render={ mouse => (
+          <Cat mouse={ mouse }/>
+        ) }/>
       </div>
     );
   }
 }
 
-export default MouseTracker;
+function withMouse(Component) {
+  return class extends React.Component {
+    render() {
+      return (
+        <Mouse render={ mouse => (
+          <Component { ...this.props } mouse={ mouse }/>
+        ) }/>
+      );
+    }
+  };
+}
+
+export default withMouse(Cat);
+// export default MouseTracker;
