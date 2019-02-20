@@ -1,81 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 
-function FriendStatus(props) {
-  const [isOnline, setIsOnline] = useState(null);
-
-  function handleStatusChange(status) {
-    setIsOnline(status.isOnline);
-  }
+function WindowSizeWithHooks() {
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
-    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
-    return () => {
-      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
-    };
-  });
-
-  if(isOnline === null) {
-    return 'Loading...';
-  }
-  return isOnline ? 'Online' : 'Offline';
-}
-
-
-function FriendListItem(props) {
-  const [isOnline, setIsOnline] = useState(null);
-
-  function handleStatusChange(status) {
-    setIsOnline(status.isOnline);
-  }
+    document.title = `window width is ${ width } px`;
+  }, [width]); // Only re-run the effect if count changes
 
   useEffect(() => {
-    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    const handleWidth = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleWidth);
     return () => {
-      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+      window.removeEventListener('resize', handleWidth);
     };
   });
 
   return (
-    <li style={ { color: isOnline ? 'green' : 'black' } }>
-      { props.friend.name }
-    </li>
+    <div>
+      <p>
+        widow width is
+      </p>
+      { width }
+    </div>
   );
 }
 
-
-/*==============================================================*/
-function useFriendStatus(friendID) {
-  const [isOnline, setIsOnline] = useState(null);
-
-  function handleStatusChange(status) {
-    setIsOnline(status.isOnline);
-  }
-
-  useEffect(() => {
-    ChatAPI.subscribeToFriendStatus(friendID, handleStatusChange);
-    return () => {
-      ChatAPI.unsubscribeFromFriendStatus(friendID, handleStatusChange);
-    };
-  });
-
-  return isOnline;
-}
-
-function FriendStatusWithHook(props) {
-  const isOnline = useFriendStatus(props.friend.id);
-
-  if(isOnline === null) {
-    return 'Loading...';
-  }
-  return isOnline ? 'Online' : 'Offline';
-}
-
-function FriendListItemWithHook(props) {
-  const isOnline = useFriendStatus(props.friend.id);
-
-  return (
-    <li style={ { color: isOnline ? 'green' : 'black' } }>
-      { props.friend.name }
-    </li>
-  );
-}
+export default WindowSizeWithHooks;
