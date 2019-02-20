@@ -9,6 +9,7 @@ import ListDelete from './Components/ListDelete/';
 import This from './Components/This/';
 import Ref from './Components/Ref/';
 import RenderProps from './Components/RenderProps/';
+import Hooks from './Components/Hook/';
 
 import './app.css';
 
@@ -79,7 +80,16 @@ export const config = [
     label: 'render props使用举例',
     text: 'render props',
     exact: false
-  }];
+  },
+  {
+    path: '/hooks',
+    component: Hooks,
+    name: 'hooks',
+    label: 'hooks 使用举例',
+    text: 'hooks',
+    exact: false
+  },
+];
 
 class App extends React.Component {
 

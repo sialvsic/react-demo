@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import Count from './Count';
+import CountTitle from './CountTitle';
+import CountWithHooks from './CountWithHooks';
+import CountWithEffects from './CountTitleWithEffects';
+import WindowSize from './WindowSize';
+import WindowSizeWithHooks from './WindowSizeWithHooks';
 
-function View() {
-  // Declare a new state variable, which we'll call "count"
-  const [count, setCount] = useState(0);
+class View extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  console.log(count);
-  console.log(setCount);
-
-  return (
-    <div>
-      <p>You clicked {count} times</p>
-      <button onClick={() => setCount(count + 1)}>
-        Click me
-      </button>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <Count/>
+        <CountTitle/>
+        <CountWithHooks/>
+        <CountWithEffects/>
+        <WindowSize/>
+        <WindowSizeWithHooks/>
+      </div>
+    );
+  }
 }
 
 export default View;
