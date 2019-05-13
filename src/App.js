@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Game from './Components/Game/';
 import Home from './Components/Home/';
 import Inline from './Components/inline-edit/';
@@ -10,6 +10,7 @@ import This from './Components/This/';
 import Ref from './Components/Ref/';
 import RenderProps from './Components/RenderProps/';
 import Hooks from './Components/Hook/';
+import Event from './Components/Event/';
 
 import './app.css';
 
@@ -89,6 +90,14 @@ export const config = [
     text: 'hooks',
     exact: false
   },
+  {
+    path: '/event',
+    component: Event,
+    name: 'event',
+    label: 'event 使用举例',
+    text: 'event',
+    exact: false
+  },
 ];
 
 class App extends React.Component {
@@ -96,7 +105,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
+        <Switch>
           {
             config.map((route) => {
               return <Route
@@ -107,7 +116,7 @@ class App extends React.Component {
               />;
             })
           }
-        </div>
+        </Switch>
       </Router>
     );
   }
