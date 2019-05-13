@@ -37,5 +37,35 @@ class View extends React.Component {
 
 }
 
-
 export default View;
+
+
+class Test extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(e) {
+    console.log('子元素的点击');
+    e.nativeEvent.stopImmediatePropagation();
+  }
+
+  componentDidMount() {
+    const parent = document.getElementById('parent');
+    parent.addEventListener('click', function() {
+      console.log('父元素上的点击');
+    });
+  }
+
+  render() {
+
+    return (
+      <div id="parent">
+        <div id="child" onClick={ this.onClick }>
+          click me
+        </div>
+      </div>
+    );
+  }
+}
