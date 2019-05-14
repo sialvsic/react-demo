@@ -8,7 +8,7 @@ const View = () => {
     <div>
       { config.map((item) => {
         return (
-          <p>
+          <p key={item.name}>
             { item.label } - Visit: <Link to={ item.path }> { item.text }</Link>
           </p>);
       }) }
