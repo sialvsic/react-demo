@@ -11,6 +11,7 @@ import Ref from './Components/Ref/';
 import RenderProps from './Components/RenderProps/';
 import Hooks from './Components/Hook/';
 import Event from './Components/Event/';
+import ScreenSelector from './Components/ScreenSelector/';
 
 import './app.css';
 
@@ -96,6 +97,14 @@ export const config = [
     name: 'event',
     label: 'event 使用举例',
     text: 'event',
+    exact: false
+  },
+  {
+    path: '/screen-selector',
+    component: ScreenSelector,
+    name: 'screenSelector',
+    label: 'screenSelector 使用举例',
+    text: 'screen Selector',
     exact: false
   },
 ];
