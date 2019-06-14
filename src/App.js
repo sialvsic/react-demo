@@ -12,6 +12,7 @@ import RenderProps from './Components/RenderProps/';
 import Hooks from './Components/Hook/';
 import Event from './Components/Event/';
 import ScreenSelector from './Components/ScreenSelector/';
+import Intersect from './Components/Intersect/';
 
 import './app.css';
 
@@ -105,6 +106,14 @@ export const config = [
     name: 'screenSelector',
     label: 'screenSelector 使用举例',
     text: 'screen Selector',
+    exact: false
+  },
+  {
+    path: '/intersect',
+    component: Intersect,
+    name: 'Intersect',
+    label: 'Intersect 使用举例',
+    text: 'Intersect by react hook',
     exact: false
   },
 ];

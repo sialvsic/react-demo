@@ -14,12 +14,15 @@ class View extends React.Component {
 
   buttonClick(e) {
     console.log('child click');
-    // e.stopPropagation();
-    // e.nativeEvent.stopImmediatePropagation();
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
   }
 
   componentDidMount() {
     document.addEventListener('click', this.click);
+    document.querySelector('#parent').addEventListener('click', () => {
+      console.log('parent1 click');
+    });
   }
 
   componentWillUnmount() {
@@ -28,7 +31,7 @@ class View extends React.Component {
 
   render() {
     return (
-      <div onClick={ this.contentClick }>
+      <div id='parent' onClick={ this.contentClick }>
         <p>this is a react event test</p>
         <button onClick={ this.buttonClick }>Click for test</button>
       </div>
