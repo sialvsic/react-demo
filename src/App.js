@@ -13,6 +13,7 @@ import Hooks from './Components/Hook/';
 import Event from './Components/Event/';
 import ScreenSelector from './Components/ScreenSelector/';
 import Intersect from './Components/Intersect/';
+import Hoc from './Components/Hoc/';
 
 import './app.css';
 
@@ -114,6 +115,14 @@ export const config = [
     name: 'Intersect',
     label: 'Intersect 使用举例',
     text: 'Intersect by react hook',
+    exact: false
+  },
+  {
+    path: '/hoc',
+    component: Hoc,
+    name: 'Hoc',
+    label: 'Hoc 使用举例',
+    text: 'Hoc by react hook',
     exact: false
   },
 ];
