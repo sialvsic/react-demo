@@ -4,6 +4,7 @@ import Game from './Components/Game/';
 import Home from './Components/Home/';
 import Inline from './Components/inline-edit/';
 import Key from './Components/Key/';
+import Key1 from './Components/Key1/';
 import Context from './Components/Context/';
 import ListDelete from './Components/ListDelete/';
 import This from './Components/This/';
@@ -45,6 +46,13 @@ export const config = [
     name: 'key',
     label: 'Key',
     text: 'Key',
+    exact: false,
+  },{
+    path: '/key1',
+    component: Key1,
+    name: 'key1',
+    label: 'Key1',
+    text: 'Key1',
     exact: false,
   },
   {
