@@ -5,7 +5,7 @@ class Item extends Component {
   render() {
     return (
       <div className="form-group">
-        <label className="col-xs-4 control-label">{ this.props.name }</label>
+        <label className="col-xs-4 control-label">{this.props.name}</label>
         <div className="col-xs-8">
           <input type='text' className='form-control'/>
         </div>
@@ -39,33 +39,64 @@ export default class View extends Component {
 
   render() {
     return (
-      <div>
-        <b>How to use: </b>
-        First write something in the inputs
-        (or <a href='#' onClick={ this.userInput }>simulate it</a>).
-        Then hit <em>Add item</em> and see what happens…
-        <hr/>
-        <button className='btn btn-primary' onClick={ this.addItem.bind(this) }><b>Add item</b> to the beginning of the list</button>
+      <React.Fragment>
+        <div>
+          <b>How to use: </b>
+          First write something in the inputs
+          (or <a href='#' onClick={ this.userInput }>simulate it</a>).
+          Then hit <em>Add item</em> and see what happens…
+          <hr/>
+          <button className='btn btn-primary' onClick={ this.addItem.bind(this) }><b>Add item</b> to the beginning of the
+            list
+          </button>
 
+          <h3>Dangerous <code>key=index</code></h3>
+          <form className="form-horizontal">
+            {this.state.list.map((todo, index) =>
+              <Item { ...todo }
+                key={ index }/>
+            )}
+          </form>
+
+          <h3>Better <code>key=id</code></h3>
+          <form className="form-horizontal">
+            {this.state.list.map((todo) =>
+              <Item { ...todo }
+                key={ todo.id }/>
+            )}
+          </form>
+
+          <hr/>
+          <a href='https://medium.com/p/e0349aece318'>&laquo; Back to the article</a>.
+        </div>
+
+        <hr/>
+        <p>
+          another key issue
+        </p>
+
+        <hr/>
         <h3>Dangerous <code>key=index</code></h3>
-        <form className="form-horizontal">
-          { this.state.list.map((todo, index) =>
-            <Item { ...todo }
-              key={ index }/>
-          ) }
-        </form>
-
+        <div>
+          {
+            this.state.list.map((todo, index) => {
+              return <p key={ index }>
+                {todo.name}
+              </p>;
+            })
+          }
+        </div>
         <h3>Better <code>key=id</code></h3>
-        <form className="form-horizontal">
-          { this.state.list.map((todo) =>
-            <Item { ...todo }
-              key={ todo.id }/>
-          ) }
-        </form>
-
-        <hr/>
-        <a href='https://medium.com/p/e0349aece318'>&laquo; Back to the article</a>.
-      </div>
+        <div>
+          {
+            this.state.list.map((todo) => {
+              return <p key={ todo.id }>
+                {todo.name}
+              </p>;
+            })
+          }
+        </div>
+      </React.Fragment>
     );
   }
 }
