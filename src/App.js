@@ -24,28 +24,28 @@ export const config = [
     name: 'home',
     label: 'Home Page',
     text: 'Home Page',
-    exact: true
+    exact: true,
   }, {
     path: '/game',
     component: Game,
     name: 'game',
     label: 'React Game',
     text: 'React Game',
-    exact: false
+    exact: false,
   }, {
     path: '/inline',
     component: Inline,
     name: 'inline',
     label: 'Inline Edit',
     text: 'Inline Edit',
-    exact: false
+    exact: false,
   }, {
     path: '/key',
     component: Key,
     name: 'key',
     label: 'Key',
     text: 'Key',
-    exact: false
+    exact: false,
   },
   {
     path: '/context',
@@ -53,21 +53,21 @@ export const config = [
     name: 'context',
     label: 'Context',
     text: 'Context',
-    exact: false
+    exact: false,
   }, {
     path: '/list-delete',
     component: ListDelete,
     name: 'list',
     label: 'List Delete 优化',
     text: 'List Delete',
-    exact: false
+    exact: false,
   }, {
     path: '/this',
     component: This,
     name: 'this',
     label: 'this 使用举例',
     text: 'this',
-    exact: false
+    exact: false,
   },
   {
     path: '/ref',
@@ -75,7 +75,7 @@ export const config = [
     name: 'ref',
     label: 'ref 使用举例',
     text: 'ref',
-    exact: false
+    exact: false,
   },
   {
     path: '/render-props',
@@ -83,7 +83,7 @@ export const config = [
     name: 'render props',
     label: 'render props使用举例',
     text: 'render props',
-    exact: false
+    exact: false,
   },
   {
     path: '/hooks',
@@ -91,7 +91,7 @@ export const config = [
     name: 'hooks',
     label: 'hooks 使用举例',
     text: 'hooks',
-    exact: false
+    exact: false,
   },
   {
     path: '/event',
@@ -99,7 +99,7 @@ export const config = [
     name: 'event',
     label: 'event 使用举例',
     text: 'event',
-    exact: false
+    exact: false,
   },
   {
     path: '/screen-selector',
@@ -107,7 +107,7 @@ export const config = [
     name: 'screenSelector',
     label: 'screenSelector 使用举例',
     text: 'screen Selector',
-    exact: false
+    exact: false,
   },
   {
     path: '/intersect',
@@ -115,7 +115,7 @@ export const config = [
     name: 'Intersect',
     label: 'Intersect 使用举例',
     text: 'Intersect by react hook',
-    exact: false
+    exact: false,
   },
   {
     path: '/hoc',
@@ -123,7 +123,7 @@ export const config = [
     name: 'Hoc',
     label: 'Hoc 使用举例',
     text: 'Hoc by react hook',
-    exact: false
+    exact: false,
   },
 ];
 
