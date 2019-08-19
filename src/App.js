@@ -15,6 +15,7 @@ import Event from './Components/Event/';
 import ScreenSelector from './Components/ScreenSelector/';
 import Intersect from './Components/Intersect/';
 import Hoc from './Components/Hoc/';
+import Reconciliation from './Components/Reconciliation/';
 
 import './app.css';
 
@@ -131,6 +132,14 @@ export const config = [
     name: 'Hoc',
     label: 'Hoc 使用举例',
     text: 'Hoc by react hook',
+    exact: false,
+  },
+  {
+    path: '/reconciliation',
+    component: Reconciliation,
+    name: 'Reconciliation',
+    label: 'Reconciliation 使用举例',
+    text: 'Reconciliation',
     exact: false,
   },
 ];
