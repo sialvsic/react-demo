@@ -16,6 +16,7 @@ import ScreenSelector from './Components/ScreenSelector/';
 import Intersect from './Components/Intersect/';
 import Hoc from './Components/Hoc/';
 import Reconciliation from './Components/Reconciliation/';
+import Scroll from './Components/Scroll/';
 
 import './app.css';
 
@@ -140,6 +141,14 @@ export const config = [
     name: 'Reconciliation',
     label: 'Reconciliation 使用举例',
     text: 'Reconciliation',
+    exact: false,
+  },
+  {
+    path: '/scroll',
+    component: Scroll,
+    name: 'scroll',
+    label: 'scroll 使用举例',
+    text: 'scroll',
     exact: false,
   },
 ];
