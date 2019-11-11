@@ -11,65 +11,28 @@ export default class Scroll extends React.Component {
     this.queue = [];
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
+    this.isScrollUp = this.isScrollUp.bind(this);
+    this.onWheelHandler = this.onWheelHandler.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.contentWrapper = document.querySelector(".content");
+  }
 
-  handleScroll(e) {
+  isScrollUp(event) {
+    if (this.pc) {
+      return event.nativeEvent.deltaY <= 0;
+    } else {
+      this.moveEndX = event.changedTouches[0].pageX;
+      this.moveEndY = event.changedTouches[0].pageY;
 
-    if (this.enableScrolling) {
-      let currentScreen = null;
-      const wrapper = document.querySelector(".content");
+      let X = this.moveEndX - this.startX;
+      let Y = this.moveEndY - this.startY;
 
-      let nodeHeight = 0;
-      let tempNodeHeight = 0;
-
-      if (e.nativeEvent.deltaY <= 0) {
-        /* scrolling up */
-        if (this.pageIndex <= 0) {
-          return;
-        }
-
-        this.pageIndex--;
-
-        this.distance = this.distance + this.queue.pop();
-      } else {
-        if (this.pageIndex >= this.items.length - 1) {
-          return;
-        }
-
-        currentScreen = document.querySelector(this.items[this.pageIndex]);
-        nodeHeight = currentScreen.getBoundingClientRect().height;
-        this.pageIndex++;
-
-        if (this.pageIndex === this.items.length - 1) {
-          tempNodeHeight = 400;
-        } else {
-          tempNodeHeight = nodeHeight;
-        }
-
-        this.distance = this.distance - tempNodeHeight;
-        this.queue.push(tempNodeHeight);
-      }
-
-      this.enableScrolling = false;
-      wrapper.style.transform = `translateY(${this.distance}px)`;
-      setTimeout(() => {
-        this.enableScrolling = true;
-      }, 1500);
+      return Math.abs(Y) > Math.abs(X) && Y > 0;
     }
   }
 
-  onTouchMove(e) {
-    console.log("onTouchMove");
-
-    this.moveEndX = e.changedTouches[0].pageX;
-    this.moveEndY = e.changedTouches[0].pageY;
-
-    let X = this.moveEndX - this.startX;
-    let Y = this.moveEndY - this.startY;
-
-    console.log(this.enableScrolling);
-
+  handleScroll(event) {
     if (this.enableScrolling) {
       let currentScreen = null;
       const wrapper = document.querySelector(".content");
@@ -77,14 +40,13 @@ export default class Scroll extends React.Component {
       let nodeHeight = 0;
       let tempNodeHeight = 0;
 
-      if (Math.abs(Y) > Math.abs(X) && Y > 0) {
+      if (this.isScrollUp(event)) {
         /* scrolling up */
         if (this.pageIndex <= 0) {
           return;
         }
 
         this.pageIndex--;
-
         this.distance = this.distance + this.queue.pop();
       } else {
         /* scrolling down */
@@ -103,7 +65,7 @@ export default class Scroll extends React.Component {
             80;
 
           if (lastHeight >= Math.abs(this.distance)) {
-            //剩余距离还有xx
+            //剩余最大可滚动距离
             tempNodeHeight = lastHeight - Math.abs(this.distance);
           } else {
             tempNodeHeight = 0;
@@ -116,25 +78,26 @@ export default class Scroll extends React.Component {
         this.queue.push(tempNodeHeight);
       }
 
-      console.log(this.distance);
-
       this.enableScrolling = false;
       wrapper.style.transform = `translateY(${this.distance}px)`;
       setTimeout(() => {
         this.enableScrolling = true;
-      }, 1000);
+      }, 1500);
     }
   }
 
-  onTouchStart(ev) {
-    console.log("onTouchStart");
-    console.log(this);
+  onWheelHandler(event) {
+    this.pc = true;
+    this.handleScroll(event);
+  }
 
-    this.startX = ev.touches[0].pageX;
-    this.startY = ev.touches[0].pageY;
+  onTouchMove(event) {
+    this.handleScroll(event);
+  }
 
-    console.log(this.startX);
-    console.log(this.startY);
+  onTouchStart(event) {
+    this.startX = event.touches[0].pageX;
+    this.startY = event.touches[0].pageY;
   }
 
   render() {
@@ -144,9 +107,9 @@ export default class Scroll extends React.Component {
         <div className="wrapper">
           <ul
             className="content"
-            onWheel={e => this.handleScroll(e)}
-            onTouchStart={e => this.onTouchStart(e)}
-            onTouchMove={e => this.onTouchMove(e)}
+            onWheel={event => this.onWheelHandler(event)}
+            onTouchStart={event => this.onTouchStart(event)}
+            onTouchMove={event => this.onTouchMove(event)}
           >
             <li className="item1">item 1</li>
             <li className="item2">item 2</li>
