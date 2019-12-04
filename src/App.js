@@ -17,6 +17,7 @@ import Intersect from './Components/Intersect/';
 import Hoc from './Components/Hoc/';
 import Reconciliation from './Components/Reconciliation/';
 import Scroll from './Components/Scroll/';
+import DynamicImport from './Components/DynamicImport/';
 
 import './app.css';
 
@@ -149,6 +150,14 @@ export const config = [
     name: 'scroll',
     label: 'scroll 使用举例',
     text: 'scroll',
+    exact: false,
+  },
+  {
+    path: '/dynamic',
+    component: DynamicImport,
+    name: 'dynamic',
+    label: 'DynamicImport 使用举例',
+    text: 'dynamic',
     exact: false,
   },
 ];

@@ -49,6 +49,7 @@
     "webpack-hot-middleware": "^2.23.1"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "better-scroll": "^1.15.2",
     "lodash": "^4.17.14",
     "react": "^16.8.2",
