@@ -5,101 +5,11 @@ import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { animate } from "./animate";
 import "./style.scss";
+import { double, calcStyle, turnRight } from "./utils";
 
 /**
- * Discover页面，轮播图组件（Pc端）
+ * 轮播图组件(左右滑动版本)
  */
-
-const defaultBannerConfig = [
-  {
-    width: 100,
-    height: 100,
-    top: 120,
-    left: 0,
-    opacity: 0.8,
-    zIndex: 3,
-    color: "#fff",
-    background: "red"
-  },
-  {
-    width: 100,
-    height: 100,
-    top: 120,
-    left: 120,
-    opacity: 0.8,
-    zIndex: 3,
-    color: "#fff",
-    background: "green"
-  },
-  {
-    width: 100,
-    height: 100,
-    top: 100,
-    left: 240,
-    opacity: 1,
-    zIndex: 4,
-    color: "#fff",
-    background: "#ffee00"
-  },
-  {
-    width: 100,
-    height: 100,
-    top: 120,
-    left: 360,
-    opacity: 0.8,
-    zIndex: 3,
-    color: "#fff",
-    background: "orange"
-  },
-  {
-    width: 100,
-    height: 100,
-    top: 120,
-    left: 480,
-    opacity: 0.8,
-    zIndex: 3,
-    color: "#fff",
-    background: "blue"
-  }
-];
-
-function double(lists) {
-  const newArray = lists.map(list => {
-    return Object.assign({}, list, { id: list.id + 1 });
-  });
-
-  return lists.concat(newArray);
-}
-
-function calcStyle(style, totalLength, length = 5) {
-  const newStyle = [].concat(style.slice(0, length));
-  const leftNumber = totalLength - length;
-  const leftPosition = newStyle[0].left;
-  const rightPosition = newStyle[length - 1].left;
-  const distance = rightPosition - leftPosition;
-
-  const segment = distance / (leftNumber + 1);
-
-  const leftStyle = [...Array(leftNumber)].map((item, index, total) => {
-    return {
-      width: 100,
-      height: 100,
-      top: -300,
-      left: segment * (total.length - index),
-      opacity: 0.8,
-      zIndex: 3,
-      color: "#fff",
-      background: "purple"
-    };
-  });
-
-  return newStyle.concat(leftStyle);
-}
-
-function turnRight(lists) {
-  return lists.unshift(lists.pop());
-}
-
 const roundItems = 5;
 
 class Carousel extends Component {
@@ -110,15 +20,9 @@ class Carousel extends Component {
     this.swiperContainer = createRef();
     this.swiperBtnGroup = createRef();
 
-    //TODO concat？？
+    //初始化内容列表
     this.contentList = [].concat(cloneDeep(props.contentList));
     this.style = props.style;
-
-    //当前位置
-    this.current = 0; //5循环
-
-    //轮转位置
-    this.order = 0; //3循环
 
     //初始化两侧
     if (this.contentList.length < roundItems) {
@@ -130,6 +34,7 @@ class Carousel extends Component {
       this.style = calcStyle(this.style, length);
     }
 
+    //保持中间数据居中
     turnRight(this.contentList);
 
     this.state = {
@@ -197,28 +102,6 @@ class Carousel extends Component {
     const newConfig = [].concat(bannerConfig);
     newConfig.unshift(newConfig.pop());
 
-    // this.current--;
-    // if (this.current < 0) {
-    //   this.current = 4;
-    // }
-
-    // if (this.order < 0) {
-    //   this.order = 2;
-    // }
-
-    // this.order = this.order % this.props.contentList.length;
-
-    //DOM更改
-    // this.contentList[this.current].name = this.props.contentList[
-    //   this.order
-    // ].name;
-
-    // this.current++;
-    // this.current = this.current % 5;
-
-    // this.order++;
-    // this.order = this.order % 3;
-
     this.setState({
       bannerConfig: newConfig
     });
@@ -236,20 +119,6 @@ class Carousel extends Component {
     const item = newConfig.shift();
     newConfig.push(item);
 
-    //DOM更改
-    // this.contentList[
-    //   this.contentList.length - 1 - this.current
-    // ].name = this.props.contentList[this.order].name;
-
-    // this.current++;
-    // this.current = this.current % 5;
-
-    // this.order--;
-    // // this.order = this.order % this.props.contentList.length;
-    // if (this.order < 0) {
-    //   this.order = 2;
-    // }
-
     this.setState({
       bannerConfig: newConfig
     });
@@ -258,24 +127,33 @@ class Carousel extends Component {
   };
 
   render() {
-    console.log(this.contentList);
+    const { containerStyle } = this.props;
+
     let list = this.contentList.map((item, index) => {
-      item.style = Object.assign({}, this.style[index]);
+      item._style = Object.assign({}, this.style[index]);
 
       for (let key in item.style) {
         if (["width", "top", "left"].includes(key)) {
-          item.style[key] = item.style[key] + "px";
+          item._style[key] = item.style[key] + "px";
         }
       }
 
       return item;
     });
 
+    const style = {};
+    for (let key in containerStyle) {
+      if (["width", "height"].includes(key)) {
+        style[key] = containerStyle[key] + "px";
+      }
+    }
+
     return (
-      <div className="banner-pc">
+      <>
         <div
           className="slide"
           ref={this.swiperWrap}
+          style={style}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         >
@@ -283,9 +161,9 @@ class Carousel extends Component {
             ref={this.swiperContainer}
             style={{ left: `-${this.props.left}px` }}
           >
-            {list.map((item, index) => {
+            {list.map(item => {
               return (
-                <li className="banner-item" style={item.style} key={item.id}>
+                <li className="banner-item" style={item._style} key={item.id}>
                   <span>{item.name}</span>
                 </li>
               );
@@ -300,7 +178,7 @@ class Carousel extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
@@ -310,56 +188,65 @@ class View extends Component {
     super(props);
     this.dom = React.createRef();
     this.state = {
-      initStyle: []
+      initStyle: [],
+      leftOffset: 0
     };
   }
+
   componentDidMount() {
     const node = this.dom.current;
-    console.log(node.getBoundingClientRect().width);
-    const width = node.getBoundingClientRect().width;
-    this.totalWidth = width;
-    this.width = Math.round(width * 0.53);
-    this.step = 30;
+    const containerWidth = node.getBoundingClientRect().width;
 
-    console.log(this.width);
+    const { style } = this.props;
+    const {
+      gap = 30,
+      cardWidthRatio = 0.53,
+      cardHeight = 100,
+      cardTop = 0
+    } = style;
+    const cardWidth = Math.round(containerWidth * cardWidthRatio);
 
     const initStyle = [...Array(roundItems)].map((item, index) => {
       return {
-        width: this.width,
-        height: 100,
-        left: Math.round((this.width + this.step) * index),
-        opacity: 0.8,
-        zIndex: 3,
-        top: 0,
-        color: "#fff",
-        background: "red"
+        width: cardWidth,
+        height: cardHeight,
+        left: Math.round((cardWidth + gap) * index),
+        top: cardTop
       };
     });
 
+    const leftOffset = Math.round(
+      cardWidth * 2.5 + gap * 2 - containerWidth / 2
+    );
+
     this.setState({
-      initStyle
+      initStyle,
+      leftOffset
     });
   }
 
   render() {
-    const contentList = [
-      { name: "A", id: "A" },
-      { name: "B", id: "B" },
-      { name: "C", id: "C" },
-      { name: "D", id: "D" }
-    ];
+    const { content, containerStyle, centerStyle } = this.props;
+    const { initStyle, leftOffset } = this.state;
 
-    console.log(this.initStyle);
+    const style = {};
+
+    for (let key in containerStyle) {
+      if (["width", "height"].includes(key)) {
+        style[key] = containerStyle[key] + "px";
+      }
+    }
+
     return (
-      <div>
+      <div className="banner-container" style={style}>
         <div ref={this.dom}></div>
-        {this.state.initStyle.length !== 0 && (
+        {initStyle.length !== 0 && (
           <Carousel
-            contentList={contentList}
-            style={this.state.initStyle}
-            left={Math.round(
-              this.width * 2.5 + this.step * 2 - this.totalWidth / 2
-            )}
+            contentList={content}
+            style={initStyle}
+            containerStyle={containerStyle}
+            centerStyle={centerStyle}
+            left={leftOffset}
           />
         )}
       </div>
