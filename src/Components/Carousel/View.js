@@ -5,7 +5,7 @@ import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import { animate } from "./animate";
 import "./style.scss";
-import { double, calcStyle, turnRight } from "./utils";
+import { double, calcStyle, turnRight, shouldShow } from "./utils";
 
 /**
  * 轮播图组件(左右滑动版本)
@@ -21,21 +21,21 @@ class Carousel extends Component {
     this.swiperBtnGroup = createRef();
 
     //初始化内容列表
-    this.contentList = [].concat(cloneDeep(props.contentList));
+    this.content = [].concat(cloneDeep(props.content));
     this.style = props.style;
 
-    //初始化两侧
-    if (this.contentList.length < roundItems) {
-      this.contentList = double(this.contentList);
+    //初始化两侧数据
+    if (this.content.length < roundItems) {
+      this.content = double(this.content);
     }
 
-    this.totalLength = this.contentList.length;
-    if (length > roundItems) {
+    this.totalLength = this.content.length;
+    if (this.totalLength > roundItems) {
       this.style = calcStyle(this.style, this.totalLength);
     }
 
     //保持中间数据居中
-    turnRight(this.contentList);
+    turnRight(this.content);
 
     //初始化中间元素位置
     this.centerIndex = 2;
@@ -81,7 +81,7 @@ class Carousel extends Component {
    * 显示左右箭头
    */
   handleMouseEnter = () => {
-    animate(this.swiperBtnGroup.current, { opacity: 1 });
+    // animate(this.swiperBtnGroup.current, { opacity: 1 });
     clearInterval(this.timer);
   };
 
@@ -102,7 +102,7 @@ class Carousel extends Component {
     const { bannerConfig } = this.state;
 
     this.centerIndex++;
-    this.centerIndex = this.centerIndex % roundItems;
+    this.centerIndex = this.centerIndex % this.totalLength;
 
     //样式修改
     const newConfig = [].concat(bannerConfig);
@@ -122,7 +122,7 @@ class Carousel extends Component {
 
     this.centerIndex--;
     if (this.centerIndex < 0) {
-      this.centerIndex = roundItems - 1;
+      this.centerIndex = this.totalLength - 1;
     }
 
     //样式更改
@@ -140,7 +140,9 @@ class Carousel extends Component {
   render() {
     const { containerStyle, centerStyle } = this.props;
 
-    let list = this.contentList.map((item, index) => {
+    console.log(this.centerIndex);
+
+    let list = this.content.map((item, index) => {
       item._style = Object.assign({}, this.style[index]);
 
       for (let key in item.style) {
@@ -156,6 +158,14 @@ class Carousel extends Component {
         };
       }
 
+      //添加显示逻辑
+      if (shouldShow(index, this.centerIndex, this.totalLength)) {
+        item._style = {
+          ...item._style,
+          visibility: "visible"
+        };
+      }
+
       return item;
     });
 
@@ -165,8 +175,6 @@ class Carousel extends Component {
         style[key] = containerStyle[key] + "px";
       }
     }
-
-    console.log(this.centerIndex);
 
     return (
       <>
@@ -179,12 +187,12 @@ class Carousel extends Component {
         >
           <ul
             ref={this.swiperContainer}
-            style={{ left: `-${this.props.left}px` }}
+            style={{ left: `-${this.props.leftOffset}px` }}
           >
             {list.map((item, index) => {
               return (
                 <li className="banner-item" style={item._style} key={item.id}>
-                  <span>{item.name}</span>
+                  {item.render()}
                 </li>
               );
             })}
@@ -233,6 +241,7 @@ class View extends Component {
         height: cardHeight,
         left: Math.round((cardWidth + gap) * index),
         top: cardTop,
+        visibility: "hidden",
         ...restStyle
       };
     });
@@ -259,18 +268,16 @@ class View extends Component {
       }
     }
 
-    console.log(initStyle);
-
     return (
       <div className="banner-container" style={style}>
         <div ref={this.dom}></div>
         {initStyle.length !== 0 && (
           <Carousel
-            contentList={content}
+            content={content}
             style={initStyle}
             containerStyle={containerStyle}
             centerStyle={centerStyle}
-            left={leftOffset}
+            leftOffset={leftOffset}
           />
         )}
       </div>

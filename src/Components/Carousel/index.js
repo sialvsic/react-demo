@@ -5,10 +5,46 @@ import View from "./View";
 class App extends Component {
   render() {
     const content = [
-      { name: "A", id: "A" },
-      { name: "B", id: "B" },
-      { name: "C", id: "C" },
-      { name: "D", id: "D" }
+      {
+        id: "A",
+        render: () => {
+          return (
+            <div>
+              <span>this is A</span>
+            </div>
+          );
+        }
+      },
+      {
+        id: "B",
+        render: () => {
+          return (
+            <div>
+              <span>this is B</span>
+            </div>
+          );
+        }
+      },
+      {
+        id: "C",
+        render: () => {
+          return (
+            <div>
+              <span>this is C</span>
+            </div>
+          );
+        }
+      },
+      {
+        id: "D",
+        render: () => {
+          return (
+            <div>
+              <span>this is D</span>
+            </div>
+          );
+        }
+      }
     ];
 
     //元素样式
@@ -19,27 +55,33 @@ class App extends Component {
       cardTop: 50,
       color: "blue",
       border: "1px solid red",
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      fontSize: "50px",
+      transform: "scale(1.0)"
     };
 
     //容器样式
     const containerStyle = {
-      width: 500,
-      height: 300
+      // width: 600,
+      height: 400
     };
 
     //中间元素样式
     const centerStyle = {
-      transform: "scale(1.1)"
+      transform: "scale(1.1)",
+      top: 20,
+      height: 300
     };
 
     return (
-      <View
-        content={content}
-        style={style}
-        containerStyle={containerStyle}
-        centerStyle={centerStyle}
-      />
+      <div style={{ width: "75%", margin: "0 auto" }}>
+        <View
+          content={content}
+          style={style}
+          containerStyle={containerStyle}
+          centerStyle={centerStyle}
+        />
+      </div>
     );
   }
 }

@@ -26,6 +26,13 @@ const animate = (element, attrs, fn) => {
     for (let attr in attrs) {
       // 获取属性的当前值
       // 计算 step = (目标值 - 当前值) / 常量 (每一次step会越来越小,最后为零)
+
+      const whiteListProperty = ["zIndex", "opacity", "left"];
+
+      if (!(whiteListProperty.findIndex(item => item === attr) !== -1)) {
+        continue;
+      }
+
       let current = 0;
       let step = 0;
 

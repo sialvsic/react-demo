@@ -11,18 +11,24 @@ export function calcStyle(style, totalLength, length = 5) {
   const newStyle = [].concat(style.slice(0, length)); //除了前5个的样式
 
   const leftNumber = totalLength - length;
-  const leftPosition = newStyle[0].left;
-  const rightPosition = newStyle[length - 1].left;
+
+  const first = newStyle[0];
+  const last = newStyle[length - 1];
+  const leftPosition = first.left;
+  const rightPosition = last.left;
+
   const distance = rightPosition - leftPosition; //最左最后之间的间距
+  const { width, height, top, left, zIndex, ...restStyle } = newStyle[0];
 
   const segment = distance / (leftNumber + 1);
 
   const leftStyle = [...Array(leftNumber)].map((item, index, total) => {
     return {
-      width: newStyle[0].width,
-      height: newStyle[0].height,
-      top: -300,
-      left: segment * (total.length - index)
+      width: width,
+      height: height,
+      top: top,
+      left: segment * (total.length - index),
+      ...restStyle
     };
   });
 
@@ -31,4 +37,26 @@ export function calcStyle(style, totalLength, length = 5) {
 
 export function turnRight(lists) {
   return lists.unshift(lists.pop());
+}
+
+export function shouldShow(index, centerIndex, length) {
+  let isLeft = false;
+  let isRight = false;
+
+  if (centerIndex === 0) {
+    isLeft = index === length - 1;
+    isRight = index === 1;
+  } else if (centerIndex === length - 1) {
+    isLeft = index === length - 2;
+    isRight = index === 0;
+  } else {
+    isLeft = index === centerIndex - 1;
+    isRight = index === centerIndex + 1;
+  }
+  const isCenter = index === centerIndex;
+
+  if (isCenter || isLeft || isRight) {
+    return true;
+  }
+  return false;
 }
