@@ -1,0 +1,117 @@
+.editor-display {
+  max-width: 700px;
+  margin: 0 auto;
+
+  > h1 {
+    width: 700px;
+    height: 120px;
+    font-family: HiraMinPro-W6;
+    font-size: 40px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #14171a;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  .author {
+    display: flex;
+    justify-content: space-between;
+
+    .info {
+      display: inline-flex;
+      .mask {
+        display: inline-block;
+        background-color: gray;
+        width: 60px;
+        height: 60px;
+        border-radius: 6px;
+      }
+
+      .description {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-left: 20px;
+
+        .name {
+          height: 27px;
+          font-family: OpenSans;
+          font-size: 20px;
+          font-weight: 600;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #14171a;
+        }
+
+        .bottom {
+          display: inline-flex;
+          align-items: center;
+        }
+
+        .job {
+          font-family: OpenSans;
+          font-size: 16px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #9faebc;
+        }
+
+        .dot {
+          display: inline-block;
+          margin: 0 12px;
+          width: 4px;
+          height: 4px;
+          position: relative;
+          &:after {
+            display: inline-block;
+            content: "";
+            position: absolute;
+            transform: translate(50%, 50%);
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: #9faebc;
+          }
+        }
+
+        .time {
+          font-family: OpenSans;
+          font-size: 16px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #9faebc;
+        }
+      }
+    }
+
+    .share {
+      display: inline-flex;
+      align-items: center;
+      .circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        background-color: #eceff2;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 16px;
+      }
+    }
+  }
+}

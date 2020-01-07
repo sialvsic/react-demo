@@ -478,3 +478,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/git,osx,java,code,vuejs,linux,angular,windows,reactnative,intellij+all
+.vscode/
