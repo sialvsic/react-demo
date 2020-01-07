@@ -29,13 +29,16 @@ class Carousel extends Component {
       this.contentList = double(this.contentList);
     }
 
-    const length = this.contentList.length;
+    this.totalLength = this.contentList.length;
     if (length > roundItems) {
-      this.style = calcStyle(this.style, length);
+      this.style = calcStyle(this.style, this.totalLength);
     }
 
     //保持中间数据居中
     turnRight(this.contentList);
+
+    //初始化中间元素位置
+    this.centerIndex = 2;
 
     this.state = {
       bannerConfig: this.style
@@ -98,6 +101,9 @@ class Carousel extends Component {
   handleLeft = () => {
     const { bannerConfig } = this.state;
 
+    this.centerIndex++;
+    this.centerIndex = this.centerIndex % roundItems;
+
     //样式修改
     const newConfig = [].concat(bannerConfig);
     newConfig.unshift(newConfig.pop());
@@ -114,6 +120,11 @@ class Carousel extends Component {
   handleRight = () => {
     const { bannerConfig } = this.state;
 
+    this.centerIndex--;
+    if (this.centerIndex < 0) {
+      this.centerIndex = roundItems - 1;
+    }
+
     //样式更改
     const newConfig = [].concat(bannerConfig);
     const item = newConfig.shift();
@@ -127,7 +138,7 @@ class Carousel extends Component {
   };
 
   render() {
-    const { containerStyle } = this.props;
+    const { containerStyle, centerStyle } = this.props;
 
     let list = this.contentList.map((item, index) => {
       item._style = Object.assign({}, this.style[index]);
@@ -136,6 +147,13 @@ class Carousel extends Component {
         if (["width", "top", "left"].includes(key)) {
           item._style[key] = item.style[key] + "px";
         }
+      }
+
+      if (index === this.centerIndex) {
+        item._style = {
+          ...item._style,
+          ...centerStyle
+        };
       }
 
       return item;
@@ -147,6 +165,8 @@ class Carousel extends Component {
         style[key] = containerStyle[key] + "px";
       }
     }
+
+    console.log(this.centerIndex);
 
     return (
       <>
@@ -161,7 +181,7 @@ class Carousel extends Component {
             ref={this.swiperContainer}
             style={{ left: `-${this.props.left}px` }}
           >
-            {list.map(item => {
+            {list.map((item, index) => {
               return (
                 <li className="banner-item" style={item._style} key={item.id}>
                   <span>{item.name}</span>
@@ -202,7 +222,8 @@ class View extends Component {
       gap = 30,
       cardWidthRatio = 0.53,
       cardHeight = 100,
-      cardTop = 0
+      cardTop = 0,
+      ...restStyle
     } = style;
     const cardWidth = Math.round(containerWidth * cardWidthRatio);
 
@@ -211,7 +232,8 @@ class View extends Component {
         width: cardWidth,
         height: cardHeight,
         left: Math.round((cardWidth + gap) * index),
-        top: cardTop
+        top: cardTop,
+        ...restStyle
       };
     });
 
@@ -236,6 +258,8 @@ class View extends Component {
         style[key] = containerStyle[key] + "px";
       }
     }
+
+    console.log(initStyle);
 
     return (
       <div className="banner-container" style={style}>

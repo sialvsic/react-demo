@@ -16,7 +16,10 @@ class App extends Component {
       gap: 50,
       cardWidthRatio: 0.7,
       cardHeight: 200,
-      cardTop: 50
+      cardTop: 50,
+      color: "blue",
+      border: "1px solid red",
+      backgroundColor: "#fff"
     };
 
     //容器样式
@@ -26,7 +29,9 @@ class App extends Component {
     };
 
     //中间元素样式
-    const centerStyle = {};
+    const centerStyle = {
+      transform: "scale(1.1)"
+    };
 
     return (
       <View
