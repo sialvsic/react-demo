@@ -27,7 +27,7 @@ const animate = (element, attrs, fn) => {
       // 获取属性的当前值
       // 计算 step = (目标值 - 当前值) / 常量 (每一次step会越来越小,最后为零)
 
-      const whiteListProperty = ["zIndex", "opacity", "left"];
+      const whiteListProperty = ["zIndex", "opacity", "left", "height", "top"];
 
       if (!(whiteListProperty.findIndex(item => item === attr) !== -1)) {
         continue;
@@ -39,8 +39,8 @@ const animate = (element, attrs, fn) => {
       if (attr === "zIndex") {
         element.style.zIndex = attrs[attr];
       } else if (attr === "opacity") {
-        current = parseFloat(getStyle(element, attr)) * 100 || 0;
-        step = (attrs[attr] * 100 - current) / 12;
+        current = parseFloat(getStyle(element, attr)) * 10 || 0;
+        step = (attrs[attr] * 10 - current) / 12;
       } else {
         current = parseInt(getStyle(element, attr)) || 0;
         step = (attrs[attr] - current) / 12;

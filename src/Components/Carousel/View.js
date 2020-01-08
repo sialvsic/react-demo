@@ -39,6 +39,15 @@ class Carousel extends Component {
 
     //初始化中间元素位置
     this.centerIndex = 2;
+    console.log(props.centerStyle);
+
+    this.style[this.centerIndex] = {
+      ...this.style[this.centerIndex],
+      ...props.centerStyle
+    };
+    // setCenterCardStyle(this.style[this.centerIndex], props.centerStyle);
+
+    console.log(this.style);
 
     this.state = {
       bannerConfig: this.style
@@ -139,8 +148,6 @@ class Carousel extends Component {
 
   render() {
     const { containerStyle, centerStyle } = this.props;
-
-    console.log(this.centerIndex);
 
     let list = this.content.map((item, index) => {
       item._style = Object.assign({}, this.style[index]);

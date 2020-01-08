@@ -53,11 +53,9 @@ class App extends Component {
       cardWidthRatio: 0.7,
       cardHeight: 200,
       cardTop: 50,
-      color: "blue",
       border: "1px solid red",
       backgroundColor: "#fff",
-      fontSize: "50px",
-      transform: "scale(1.0)"
+      fontSize: "50px"
     };
 
     //容器样式
@@ -68,7 +66,8 @@ class App extends Component {
 
     //中间元素样式
     const centerStyle = {
-      transform: "scale(1.1)",
+      // transform: "scale(1.1)",
+      color: "blue",
       top: 20,
       height: 300
     };

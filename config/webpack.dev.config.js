@@ -1,19 +1,14 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: [
-    'webpack-hot-middleware/client',
-    './src/index.js'
-  ],
-  devtool: 'source-map',
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  entry: ["webpack-hot-middleware/client", "./src/index.js"],
+  devtool: "source-map",
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/static/'
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "../dist"),
+    publicPath: "/static/"
   },
   module: {
     rules: [
@@ -21,23 +16,18 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
-          loader: 'babel-loader'
+          loader: "babel-loader"
         }
       },
       {
         test: /\.(s*)css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-          'postcss-loader'
-        ]
+        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"]
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 18192
             }
@@ -46,5 +36,5 @@ module.exports = {
       }
     ]
   },
-  mode: 'development'
+  mode: "development"
 };
