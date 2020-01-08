@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import "./index.scss";
 import loading from "../../resources/loading.svg";
 
+function onClick() {
+  console.log("click me");
+}
+
 const parseToDOM = data => {
   //解析data-type 为对应的class
   //添加相关的dom元素，比如 button按钮
@@ -36,6 +40,9 @@ class Text extends Component {
     let node = this.node.current;
 
     node.innerHTML = parseToDOM(this.props.data);
+
+    const img = document.querySelector(".loading img");
+    img.addEventListener("click", onClick);
   }
 
   render() {
